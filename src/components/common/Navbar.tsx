@@ -16,6 +16,12 @@ export default function Navbar() {
           </Link>
           <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
             <Link
+              href="/my-daos"
+              className="transition-colors hover:text-foreground/80 text-foreground/60"
+            >
+              My DAOs
+            </Link>
+            <Link
               href="/create"
               className="transition-colors hover:text-foreground/80 text-foreground/60"
             >
