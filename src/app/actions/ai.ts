@@ -1,7 +1,6 @@
 "use server";
 
 import { generateLeaderboard } from "@/ai/flows/gamified-trust-leaderboard";
-import { generateLogo } from "@/ai/flows/generate-logo-flow";
 import { summarizeProposal } from "@/ai/flows/summarize-proposal-flow";
 
 export async function getLeaderboardData() {
@@ -34,16 +33,6 @@ export async function getLeaderboardData() {
     console.error("Error generating leaderboard:", error);
     return null;
   }
-}
-
-export async function getGeneratedLogo(prompt: string) {
-    try {
-        const { logoUrl } = await generateLogo({ prompt });
-        return logoUrl;
-    } catch (error) {
-        console.error("Error generating logo:", error);
-        return null;
-    }
 }
 
 export async function getProposalSummary(proposalText: string) {

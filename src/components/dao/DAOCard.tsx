@@ -18,7 +18,6 @@ export interface DAOCardProps {
   description: string;
   imageUrl: string;
   imageHint: string;
-  logoUrl?: string;
   raised: number;
   goal: number;
   contributors: number;
@@ -30,7 +29,6 @@ export function DAOCard({
   description,
   imageUrl,
   imageHint,
-  logoUrl,
   raised,
   goal,
   contributors,
@@ -40,7 +38,7 @@ export function DAOCard({
 
   return (
     <Card className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-      <div className="relative h-40 w-full">
+      <div className="relative h-48 w-full">
         <Image
           src={imageUrl}
           alt={name}
@@ -49,14 +47,8 @@ export function DAOCard({
           data-ai-hint={imageHint}
           sizes="(max-width: 768px) 100vw, 50vw"
         />
-        <div className="absolute -bottom-8 left-6">
-            <Avatar className="h-16 w-16 border-4 border-card">
-              {logoUrl && <AvatarImage src={logoUrl} alt={`${name} logo`} />}
-              <AvatarFallback className="text-lg font-bold bg-muted">{name.charAt(0)}</AvatarFallback>
-            </Avatar>
-        </div>
       </div>
-       <CardHeader className="pt-12">
+       <CardHeader>
         <CardTitle className="font-headline text-2xl">{name}</CardTitle>
         <CardDescription className="line-clamp-2 h-[40px]">{description}</CardDescription>
       </CardHeader>

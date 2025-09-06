@@ -3,8 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { useState } from "react";
-import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -27,24 +25,19 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Bot, Rocket, Loader2 } from "lucide-react";
+import { Rocket } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { getGeneratedLogo } from "../actions/ai";
-import { Skeleton } from "@/components/ui/skeleton";
 
 const formSchema = z.object({
   projectName: z.string().min(3, "Project name must be at least 3 characters.").max(50),
   purpose: z.string().min(10, "Purpose must be at least 10 characters.").max(500),
   fundingGoal: z.coerce.number().min(1, "Funding goal must be positive."),
   tokenType: z.enum(["erc20", "erc721", "erc1155"]),
-  logoUrl: z.string().optional(),
 });
 
 export default function CreateDaoPage() {
   const { toast } = useToast();
   const router = useRouter();
-  const [isGeneratingLogo, setIsGeneratingLogo] = useState(false);
-  const [logoUrl, setLogoUrl] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -56,40 +49,6 @@ export default function CreateDaoPage() {
     },
   });
   
-  const purposeValue = form.watch("purpose");
-
-  const handleGenerateLogo = async () => {
-    const purpose = form.getValues("purpose");
-    if (!purpose || purpose.length < 10) {
-      toast({
-        title: "Please describe your purpose",
-        description: "The purpose needs to be at least 10 characters long to generate a meaningful logo.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setIsGeneratingLogo(true);
-    setLogoUrl(null); // Clear previous logo
-    try {
-      const url = await getGeneratedLogo(purpose);
-      if (url) {
-        setLogoUrl(url);
-        form.setValue("logoUrl", url);
-      } else {
-        throw new Error("Logo generation failed.");
-      }
-    } catch (error) {
-       toast({
-        title: "Logo Generation Failed",
-        description: "Something went wrong while creating the logo. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsGeneratingLogo(false);
-    }
-  };
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // In a real app, this would call the backend API:
     // const response = await fetch('/api/create-dao', { method: 'POST', body: JSON.stringify(values) });
@@ -159,36 +118,6 @@ export default function CreateDaoPage() {
                   </FormItem>
                 )}
               />
-
-              <div className="space-y-4">
-                <FormLabel>Project Logo</FormLabel>
-                <div className="flex items-center gap-4">
-                    <div className="w-24 h-24 rounded-lg border border-dashed flex items-center justify-center bg-muted/50">
-                       {isGeneratingLogo ? (
-                           <Skeleton className="w-full h-full" />
-                       ) : logoUrl ? (
-                           <Image src={logoUrl} alt="Generated DAO Logo" width={96} height={96} className="object-cover rounded-md" />
-                       ) : (
-                           <Bot className="h-8 w-8 text-muted-foreground" />
-                       )}
-                    </div>
-                    <div className="flex-1">
-                        <Button
-                          type="button"
-                          variant="outline"
-                          onClick={handleGenerateLogo}
-                          disabled={isGeneratingLogo || !purposeValue || purposeValue.length < 10}
-                        >
-                          {isGeneratingLogo ? <Loader2 className="animate-spin" /> : <Bot className="mr-2" />}
-                          {isGeneratingLogo ? 'Generating...' : 'Generate Logo with AI'}
-                        </Button>
-                        <p className="text-sm text-muted-foreground mt-2">
-                            Describe your purpose above, then let AI create a logo for you.
-                        </p>
-                    </div>
-                </div>
-              </div>
-
 
               <FormField
                 control={form.control}
