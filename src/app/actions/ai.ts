@@ -1,6 +1,7 @@
 "use server";
 
 import { generateLeaderboard } from "@/ai/flows/gamified-trust-leaderboard";
+import { generateLogo } from "@/ai/flows/generate-logo-flow";
 
 export async function getLeaderboardData() {
   try {
@@ -13,7 +14,7 @@ export async function getLeaderboardData() {
         - Eve (0xccc...ddd): Frequent participant in Discord, contributed 1 ETH, voted on 30% of proposals.
         - Frank (0xeee...fff): Contributed 20 ETH, has not participated in voting or discussions.
         - Grace (0xggg...hhh): Leads the marketing working group, has brought in 3 major partnerships, voted on 75% of proposals.
-        - Hank (0xiii...jjj): Wrote 2 successful proposals, contributed 10 ETH.
+        - Hank (0xiiii...jjj): Wrote 2 successful proposals, contributed 10 ETH.
         - Ivan (0xkkk...lll): Active voter (99% participation), specializes in reviewing technical proposals.
         - Judy (0xmmm...nnn): Long-time member, contributed 2 ETH, mentors new members.
       `,
@@ -32,4 +33,14 @@ export async function getLeaderboardData() {
     console.error("Error generating leaderboard:", error);
     return null;
   }
+}
+
+export async function getGeneratedLogo(prompt: string) {
+    try {
+        const { logoUrl } = await generateLogo({ prompt });
+        return logoUrl;
+    } catch (error) {
+        console.error("Error generating logo:", error);
+        return null;
+    }
 }
