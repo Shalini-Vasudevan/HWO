@@ -12,7 +12,8 @@ import {
 } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { GenerateLeaderboardOutput } from "@/ai/flows/gamified-trust-leaderboard";
-import { Award, Medal, Trophy } from "lucide-react";
+import { Award, Medal, Trophy, Star } from "lucide-react";
+import { Badge } from "../ui/badge";
 
 type LeaderboardData = GenerateLeaderboardOutput | null;
 
@@ -64,7 +65,7 @@ export default function Leaderboard() {
 
   return (
     <div className="space-y-4">
-      <p className="text-sm text-muted-foreground">Top contributors ranked by trust score based on community activity.</p>
+      <p className="text-sm text-muted-foreground">Top contributors ranked by trust score and recognized with badges for their key activities.</p>
        <div className="-mx-6 -mb-6">
         <Table>
           <TableHeader>
@@ -76,7 +77,7 @@ export default function Leaderboard() {
           </TableHeader>
           <TableBody>
             {data.leaderboard.map((member) => (
-              <TableRow key={member.rank} className="h-16">
+              <TableRow key={member.rank} className="h-20">
                 <TableCell>
                     <div className="flex items-center justify-center h-full w-full">
                         {getRankIcon(member.rank)}
@@ -86,6 +87,14 @@ export default function Leaderboard() {
                     <div className="font-medium">{member.member}</div>
                     <div className="text-xs text-muted-foreground mt-1">
                         {member.perks}
+                    </div>
+                    <div className="mt-2 flex flex-wrap gap-1">
+                        {member.badges.map((badge, index) => (
+                            <Badge key={index} variant="secondary" className="text-xs">
+                                <Star className="h-3 w-3 mr-1 text-accent" />
+                                {badge}
+                            </Badge>
+                        ))}
                     </div>
                 </TableCell>
                 <TableCell className="text-right font-mono font-semibold">{member.trustScore.toFixed(2)}</TableCell>
