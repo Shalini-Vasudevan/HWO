@@ -52,7 +52,7 @@ const prompt = ai.definePrompt({
   output: {schema: GenerateLeaderboardOutputSchema},
   prompt: `You are a DAO governance expert, skilled in evaluating community contributions and assigning trust scores.
 
-You will use the provided contributor activities and trust algorithm description to generate a leaderboard of top DAO members.
+You will use the provided contributor activities and trust algorithm description to generate a leaderboard of top DAO members. For each member in the leaderboard, you must also suggest a relevant perk based on the provided trust algorithm description.
 
 Contributor Activities: {{{contributorActivities}}}
 Trust Algorithm Description: {{{trustAlgorithmDescription}}}
