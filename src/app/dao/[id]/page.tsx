@@ -1,18 +1,10 @@
 'use client';
 
 import {
-  AreaChart,
-  Area,
   ResponsiveContainer,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
   PieChart,
   Pie,
   Cell,
-  Legend,
-  DonutChart,
 } from 'recharts';
 
 import { useMemo } from 'react';
@@ -186,12 +178,7 @@ export default function DaoPage({ params }: { params: { id: string } }) {
               </CardHeader>
               <CardContent>
                 <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-                  <DonutChart
-                    data={proposalStatusData}
-                    dataKey="value"
-                    nameKey="name"
-                    innerRadius={50}
-                  >
+                  <PieChart>
                     <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
                     <Pie
                       data={proposalStatusData}
@@ -208,7 +195,7 @@ export default function DaoPage({ params }: { params: { id: string } }) {
                       content={<ChartLegendContent nameKey="name" />}
                       className="-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center"
                     />
-                  </DonutChart>
+                  </PieChart>
                 </ChartContainer>
               </CardContent>
             </Card>
