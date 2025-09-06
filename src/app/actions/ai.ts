@@ -2,6 +2,7 @@
 
 import { generateLeaderboard } from "@/ai/flows/gamified-trust-leaderboard";
 import { generateLogo } from "@/ai/flows/generate-logo-flow";
+import { summarizeProposal } from "@/ai/flows/summarize-proposal-flow";
 
 export async function getLeaderboardData() {
   try {
@@ -41,6 +42,16 @@ export async function getGeneratedLogo(prompt: string) {
         return logoUrl;
     } catch (error) {
         console.error("Error generating logo:", error);
+        return null;
+    }
+}
+
+export async function getProposalSummary(proposalText: string) {
+    try {
+        const { summary } = await summarizeProposal({ proposalText });
+        return summary;
+    } catch (error) {
+        console.error("Error generating proposal summary:", error);
         return null;
     }
 }

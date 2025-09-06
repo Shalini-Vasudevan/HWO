@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { ProposalDetailsDialog } from "./ProposalDetailsDialog";
 
 export interface ProposalCardProps {
     id: string;
     title: string;
+    description: string;
     author: string;
     status: 'active' | 'passed' | 'failed';
     votes: {
@@ -14,7 +16,8 @@ export interface ProposalCardProps {
     }
 }
 
-export function ProposalCard({ title, author, status, votes }: ProposalCardProps) {
+export function ProposalCard(props: ProposalCardProps) {
+    const { title, author, status, votes } = props;
     const totalVotes = votes.yes + votes.no;
     const yesPercentage = totalVotes > 0 ? (votes.yes / totalVotes) * 100 : 0;
     const noPercentage = totalVotes > 0 ? (votes.no / totalVotes) * 100 : 0;
@@ -48,12 +51,15 @@ export function ProposalCard({ title, author, status, votes }: ProposalCardProps
                     </div>
                  </div>
             </CardContent>
-            {status === 'active' && (
-                <CardFooter className="flex gap-4">
-                    <Button className="flex-1 text-primary-foreground bg-[hsl(var(--chart-2))] hover:bg-[hsl(var(--chart-2))]/90">Vote Yes</Button>
-                    <Button className="flex-1 text-primary-foreground bg-[hsl(var(--chart-1))] hover:bg-[hsl(var(--chart-1))]/90">Vote No</Button>
-                </CardFooter>
-            )}
+            <CardFooter className="flex gap-4">
+                {status === 'active' && (
+                    <>
+                        <Button className="flex-1 text-primary-foreground bg-[hsl(var(--chart-2))] hover:bg-[hsl(var(--chart-2))]/90">Vote Yes</Button>
+                        <Button className="flex-1 text-primary-foreground bg-[hsl(var(--chart-1))] hover:bg-[hsl(var(--chart-1))]/90">Vote No</Button>
+                    </>
+                )}
+                <ProposalDetailsDialog {...props} />
+            </CardFooter>
         </Card>
     )
 }

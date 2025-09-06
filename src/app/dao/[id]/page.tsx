@@ -23,6 +23,7 @@ const mockProposals: ProposalCardProps[] = [
     {
         id: 'prop-001',
         title: 'Fund Reforestation Project in Amazon',
+        description: 'This proposal allocates 15,000 USDC from the treasury to partner with a verified local NGO in Brazil for a large-scale reforestation effort in a region affected by illegal logging. The funds will cover the cost of saplings, labor, and 3 years of maintenance and monitoring. The goal is to re-plant 50,000 native trees, restoring critical habitat and creating a carbon sink. Detailed project plan and NGO due diligence report are attached.',
         author: '0x123...abc',
         status: 'active',
         votes: { yes: 120, no: 15, abstain: 30 }
@@ -30,6 +31,7 @@ const mockProposals: ProposalCardProps[] = [
     {
         id: 'prop-002',
         title: 'Develop Ocean Cleanup Drone',
+        description: 'We propose to fund a research and development initiative to build a prototype of an autonomous, solar-powered drone for collecting plastic waste from ocean gyres. The initial funding request of 25,000 USDC will support a team of 3 engineers for 6 months, cover material costs, and facilitate initial testing. The project aims to produce an open-source design that other organizations can replicate and deploy.',
         author: '0x456...def',
         status: 'active',
         votes: { yes: 98, no: 42, abstain: 10 }
@@ -37,6 +39,7 @@ const mockProposals: ProposalCardProps[] = [
     {
         id: 'prop-003',
         title: 'Update DAO Governance Parameters',
+        description: 'This proposal suggests updating the governance contract to reduce the proposal quorum from 5% to 3% of total token supply, and to lower the voting period from 7 days to 5 days. The goal is to increase the speed and efficiency of decision-making. Analysis of past proposal participation suggests this change would not significantly impact governance security. See attached simulation results.',
         author: '0x789...ghi',
         status: 'passed',
         votes: { yes: 210, no: 5, abstain: 12 }
