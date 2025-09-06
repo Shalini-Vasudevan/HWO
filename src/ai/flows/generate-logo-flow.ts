@@ -42,12 +42,13 @@ const generateLogoFlow = ai.defineFlow(
       }
     });
 
-    if (!media.url) {
+    const url = media.url;
+    if (!url) {
       throw new Error('Image generation failed to return a URL.');
     }
 
     return {
-      logoUrl: media.url,
+      logoUrl: url,
     };
   }
 );
